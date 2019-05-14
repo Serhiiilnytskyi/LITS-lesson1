@@ -1,15 +1,16 @@
 package lesson2;
 
 import java.beans.FeatureDescriptor;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 public class ThreadPoolDemoMain {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
 
+//        CompletableFuture<Integer> comFuture = executorService.submit(() -> {
+//           return 22;
+//        });
+//
         Integer future = executorService.submit(() -> {
             return 43;
         }).get();
