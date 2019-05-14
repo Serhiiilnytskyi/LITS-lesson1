@@ -1,3 +1,5 @@
+package lesson1;
+
 import java.io.*;
 import java.net.*;
 
@@ -40,7 +42,7 @@ class ServerListener extends Thread {
     private void send(String msg) {
        String polydrom = isPolydrom(msg) ? "is polydrom" : "isn't polydrom";
         try {
-            out.write("Client send this message: " + msg + ". This message " + polydrom + "\n");
+            out.write("lesson1.Client send this message: " + msg + ". This message " + polydrom + "\n");
             out.flush();
         } catch (IOException ignored) {
         }

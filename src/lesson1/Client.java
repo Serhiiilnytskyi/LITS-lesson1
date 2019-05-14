@@ -1,5 +1,6 @@
+package lesson1;
+
 import java.io.*;
-import java.net.Socket;
 
 public class Client {
     public static String ipAddr = "localhost";

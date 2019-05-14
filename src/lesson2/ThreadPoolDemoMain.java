@@ -16,5 +16,7 @@ public class ThreadPoolDemoMain {
             System.out.println("hello3");
         });
         executorService.shutdown();
+      //        executorService.shutdownNow(); Stop all threads now but Throw  InterruptedException
+        System.out.println(executorService.isShutdown());
     }
 }
