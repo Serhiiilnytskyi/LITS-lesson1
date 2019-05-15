@@ -1,7 +1,8 @@
 package lesson2;
 
-import java.beans.FeatureDescriptor;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ThreadPoolDemoMain {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
