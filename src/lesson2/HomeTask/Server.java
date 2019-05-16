@@ -6,8 +6,7 @@ import java.util.concurrent.*;
 
 public class Server {
     List<Client> clients;
-    ExecutorService executor = Executors.newFixedThreadPool(2);
-    List<Future<String>> futures = new ArrayList<Future<String>>();
+    static ExecutorService executor = Executors.newFixedThreadPool(2);
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         List<Client> clients = new ArrayList<>();
@@ -24,24 +23,27 @@ public class Server {
         for (int i = 0; i < clients.size(); i++) {
             executor.execute(clients.get(i));
         }
+        //TODO  Think how to do this block (while-for-if) shoter ANTIPATERN
         while (true) {
             for (int i = 0; i <clients.size(); i++) {
                 if (clients.get(i).isNewWord()) {
-                    System.out.println("Client " + (i + 1) + " send this word: " +
-                            clients.get(i).getWord() + "-" +
-                            (isPolydrom(clients.get(i).getWord()) ? "this is polindome" : "this isn't polindrome"));
-
+                    word = clients.get(i).getWord();
+                    System.out.println("Client " + (i + 1) + " send this word: " + word + "-" +
+                            (isPolydrom(word) ? "this is polindome" : "this isn't polindrome"));
                     clients.get(i).setNewWord(false);
                 }
+
+                //TODO complete shutdown executor if all Clients are stopped
+/*                if (word.equals("stop")){
+                    stopServer();
+                    System.exit(1);
+                }*/
             }
         }
     }
 
-
-
-    public Server(Runnable client) {
-/*        this.clients = new List<Callable>() {
-        }*/
+    public Server(Client client) {
+        this.clients.add(client);
     }
 
     private boolean isPolydrom(String msg) {
@@ -49,4 +51,21 @@ public class Server {
                 .equalsIgnoreCase(new StringBuilder(msg.replaceAll("\\W", ""))
                         .reverse().toString());
     }
+
+    public static void stopServer(){
+        try {
+            System.out.println("attempt to shutdown executor");
+            executor.shutdown();
+            executor.awaitTermination(5, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            System.err.println("task interrupted");
+        } finally {
+            if (!executor.isTerminated()) {
+                System.err.println("cancel non-finished task");
+            }
+            executor.shutdownNow();
+            System.out.println("shutdown finished");
+        }
+    }
+
 }

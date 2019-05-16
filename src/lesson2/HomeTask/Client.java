@@ -3,8 +3,6 @@ package lesson2.HomeTask;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
 
 public class Client implements Runnable {
     private String word;
@@ -15,7 +13,7 @@ public class Client implements Runnable {
     public void run() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String word = "";
-
+        //TODO  Think how to do this block (while-if-try) shoter ANTIPATERN
         while (!word.equals("stop")) {
             if (!isNewWord && waitForInput) {
                 try {
